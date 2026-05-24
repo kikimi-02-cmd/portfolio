@@ -25,6 +25,30 @@ export function Projects() {
                   </span>
                 ))}
               </div>
+              {(p.url || p.noteUrl) && (
+                <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                  {p.url && (
+                    <a
+                      href={p.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-accent)] hover:underline"
+                    >
+                      開く ↗
+                    </a>
+                  )}
+                  {p.noteUrl && (
+                    <a
+                      href={p.noteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+                    >
+                      note ↗
+                    </a>
+                  )}
+                </div>
+              )}
             </li>
           ))}
         </ul>
