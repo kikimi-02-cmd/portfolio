@@ -1,0 +1,38 @@
+{
+  "schema": "uaif/config-v1",
+  "product": "portfolio",
+  "enabled": false,
+  "mode": "shadow",
+  "autonomy": "balanced",
+  "cadence_cron": "0 23 * * 2",
+  "north_star": "ポートフォリオサイトへの流入数と各プロダクトへの送客クリック数（Vercel Analytics の pageviews + 各プロダクトリンクのクリック率）",
+  "guardrails": [
+    "Core Web Vitals（LCP / CLS / FID）を既存スコアから劣化させない",
+    "src/data/projects.ts に掲載された各プロダクトへのリンクが常に正しく機能すること",
+    "SEO メタデータおよび OGP タグの完全性を保つ（title, description, og:image 必須）",
+    "Next.js App Router のビルド成功を常に維持する（npm run build が green）",
+    "Tailwind CSS v4 のトークン・クラス体系を破壊しない"
+  ],
+  "verify": {
+    "install": "npm ci",
+    "build": "npm run build",
+    "lint": "npm run lint",
+    "test": "npm test",
+    "typecheck": ""
+  },
+  "telemetry": ["recent commits", "open issues", "Vercel Analytics pageviews", "各プロダクトリンクのクリック数"],
+  "token_budget_usd": 2.0,
+  "max_open_prs": 1,
+  "irreversible_keywords": [
+    "price",
+    "pricing",
+    "payment",
+    "delete",
+    "drop table",
+    "schema",
+    "auth",
+    "public claim",
+    "spend"
+  ],
+  "council_route": "honnex.app/admin/council"
+}
