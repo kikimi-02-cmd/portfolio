@@ -1,8 +1,8 @@
 {
   "schema": "uaif/config-v1",
   "product": "portfolio",
-  "enabled": false,
-  "mode": "shadow",
+  "enabled": true,
+  "mode": "live",
   "autonomy": "balanced",
   "cadence_cron": "0 23 * * 2",
   "north_star": "ポートフォリオサイトへの流入数と各プロダクトへの送客クリック数（Vercel Analytics の pageviews + 各プロダクトリンクのクリック率）",
