@@ -4,7 +4,7 @@
   "enabled": true,
   "mode": "live",
   "autonomy": "balanced",
-  "cadence_cron": "0 23 * * 2",
+  "cadence_cron": "30 22 * * 6",
   "north_star": "ポートフォリオサイトへの流入数と各プロダクトへの送客クリック数（Vercel Analytics の pageviews + 各プロダクトリンクのクリック率）",
   "guardrails": [
     "Core Web Vitals（LCP / CLS / FID）を既存スコアから劣化させない",
