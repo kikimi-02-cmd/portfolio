@@ -143,17 +143,27 @@ CPCは安いが母数が読めない。A〜Cの結果を見てから開放する
 
 **計測が入っていない広告は、金を捨てるのと同じ。** 順番を守ること。
 
-1. **フォーム送信先を設定する**
-   - Formspree（無料枠あり）でフォームを作成し、エンドポイントを取得
-   - `src/app/automation/page.tsx` の `FORM_ENDPOINT` を差し替え
-   - `THANKS_URL` を本番ドメインの `https://<本番ドメイン>/automation/thanks` に差し替え
+**コードは一切触らない。** 設定はすべて Vercel の環境変数で行う。
+
+| 環境変数 | 入れる値 | 取得元 |
+|---|---|---|
+| `NEXT_PUBLIC_FORM_ENDPOINT` | `https://formspree.io/f/xxxxxxxx` | Formspree でフォーム作成後に表示される |
+| `NEXT_PUBLIC_SITE_URL` | `https://<本番ドメイン>`（**末尾スラッシュなし**） | Vercel の本番ドメイン |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | `AW-123456789` | Google広告 → 管理 → Googleタグ |
+| `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL` | `AbC-D_efGhIjKlMnO` | コンバージョンアクションのタグ設定に表示される `送信先` の `/` 以降 |
+
+設定場所: Vercel ダッシュボード → 該当プロジェクト → Settings → Environment Variables
+（Production / Preview の両方に入れる）。**保存後に再デプロイが必要。**
+
+1. **Formspree でフォームを作成**し、`NEXT_PUBLIC_FORM_ENDPOINT` と `NEXT_PUBLIC_SITE_URL` を設定
+   - 未設定のあいだ、LPのフォーム上に黄色の警告が表示される。**この警告が出ている状態で広告を配信しない**
 2. **Google広告のコンバージョンアクションを作成**
    - 種類: ウェブサイト / カテゴリ: 見込み顧客のフォーム送信
    - 値: **¥50,000**（診断1件の売上。ROASが読めるようになる）
    - カウント方法: **1回**（同一ユーザーの重複送信を数えない）
-3. **Google タグ（gtag.js）をサイトに設置**
-   - `src/app/layout.tsx` に gtag スニペットを追加
-   - `src/app/automation/thanks/page.tsx` の `CONVERSION_SEND_TO` を実IDに差し替え
+3. **タグのIDを環境変数に設定**（`NEXT_PUBLIC_GOOGLE_ADS_ID` と `..._CONVERSION_LABEL`）
+   - Googleタグは `/automation` 配下でのみ読み込まれる（サイト全体は汚さない）
+   - 両方そろったときだけコンバージョンが送出される。片方だけなら何も起きない
 4. **テスト送信**
    - 自分でフォームを送信し、`/automation/thanks` に着地することを確認
    - Google広告の管理画面で、24時間以内にコンバージョンが1件計上されることを確認

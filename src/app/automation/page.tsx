@@ -1,8 +1,10 @@
 // 広告着地用ランディングページ。
-// FORM_ENDPOINT を実エンドポイント (Formspree 等) に差し替えるまでフォームは送信されない。
-// 差し替え手順は docs/automation-ads-plan.md §5 を参照。
-const FORM_ENDPOINT = "https://formspree.io/f/REPLACE_ME";
-const THANKS_URL = "https://example.com/automation/thanks"; // 本番ドメインに差し替える
+// 設定はすべて環境変数。コードを触らずに Vercel のダッシュボードから差し替える。
+// 手順は docs/automation-ads-plan.md §6 を参照。
+const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+const THANKS_URL = SITE_URL ? `${SITE_URL}/automation/thanks` : "";
+const FORM_READY = FORM_ENDPOINT !== "" && THANKS_URL !== "";
 
 const CASES = [
   {
@@ -228,6 +230,15 @@ export default function AutomationPage() {
         <p className="mt-2 text-sm text-neutral-600">
           いただいた内容を読んでから返信します。営業のご連絡は一切しません。
         </p>
+
+        {!FORM_READY && (
+          <p className="mt-6 rounded-lg border border-amber-400 bg-amber-50 p-4 text-sm text-amber-900">
+            設定待ち: 環境変数 <code>NEXT_PUBLIC_FORM_ENDPOINT</code> と{" "}
+            <code>NEXT_PUBLIC_SITE_URL</code>{" "}
+            が未設定のため、フォームはまだ送信できません。
+            <strong className="font-bold">この表示が出ている状態で広告を配信しないこと。</strong>
+          </p>
+        )}
 
         <form
           action={FORM_ENDPOINT}

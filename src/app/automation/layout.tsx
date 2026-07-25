@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+
+// Google タグ。広告ページ配下でのみ読み込む (サイト全体は汚さない)。
+// Vercel の環境変数 NEXT_PUBLIC_GOOGLE_ADS_ID に "AW-XXXXXXXXX" を入れると有効になる。
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 
 export const metadata: Metadata = {
   title: "その手作業、2週間で終わらせます | 個人事業主のための業務自動化",
@@ -19,6 +24,24 @@ export default function AutomationLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white text-neutral-900">{children}</div>
+    <div className="min-h-screen bg-white text-neutral-900">
+      {GOOGLE_ADS_ID && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="gtag-init" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GOOGLE_ADS_ID}');
+            `}
+          </Script>
+        </>
+      )}
+      {children}
+    </div>
   );
 }
