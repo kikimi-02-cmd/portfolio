@@ -7,6 +7,8 @@ export type Project = {
   repo?: string;
   category: Category;
   tags: string[];
+  /** 公開前のプロトタイプ。触れるが「公開中」には数えない。 */
+  wip?: boolean;
 };
 
 export const projects: Project[] = [
@@ -17,6 +19,22 @@ export const projects: Project[] = [
     url: "https://pokemoji.vercel.app",
     category: "Game",
     tags: ["Web", "Game"],
+  },
+  {
+    name: "コトバドル",
+    description: "5 文字のひらがなを当てる日本語ワードパズル。毎日お題が変わる。",
+    url: "https://kotobadoru.vercel.app",
+    category: "Game",
+    tags: ["Web", "Game", "PWA"],
+  },
+  {
+    name: "まぼろし図鑑",
+    description:
+      "描いた絵がモンスターになる、こども向けの図鑑 RPG。捕獲＝スケッチ。",
+    url: "https://maboroshizukan.vercel.app",
+    category: "Game",
+    tags: ["Web", "Game", "PWA"],
+    wip: true,
   },
   {
     name: "Mine Rogue",

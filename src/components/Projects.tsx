@@ -11,7 +11,14 @@ function ProjectCard({ p }: { p: Project }) {
   const inner = (
     <>
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-lg font-bold">{p.name}</h3>
+        <h3 className="text-lg font-bold">
+          {p.name}
+          {p.wip && (
+            <span className="ml-2 align-middle rounded-full border border-[var(--color-accent)]/40 px-2 py-0.5 text-xs font-normal text-[var(--color-accent)]">
+              開発中
+            </span>
+          )}
+        </h3>
         {p.url && (
           <span
             aria-hidden
